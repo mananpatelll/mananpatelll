@@ -3,7 +3,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg">
-  <img alt="Manan Patel — AI Engineer. Agentic LLM systems, multi-agent orchestration, LLM evaluation and safety, applied ML for markets. M.S. Computer Science, Temple University. Philadelphia, PA." src="assets/hero-light.svg" width="100%">
+  <img alt="Manan Patel — AI Engineer. Agentic LLM systems, multi-agent orchestration, RAG and retrieval, LLM evaluation. M.S. Computer Science, Temple University. Philadelphia, PA." src="assets/hero-light.svg" width="100%">
 </picture>
 
 <a href="mailto:manan305@icloud.com">
@@ -31,18 +31,25 @@
 
 ### `$ whoami`
 
-I'm an AI engineer in Philadelphia. I build **agentic LLM systems** — the kind that have to
-commit to a decision, show their reasoning, and stay measurable when they get it wrong.
+AI engineer in Philadelphia, mostly building agentic LLM systems.
 
-Two questions take up most of my time:
+Two of them so far: a multi-agent trading desk that's still very much a work in
+progress, and a small eval harness that checks whether a RAG agent is actually
+using its tools or just winging it. The eval one taught me more — turns out an
+agent can skip its tools half the time and still look fine until you measure it.
 
-1. How do you get several LLM agents to produce a decision a human would actually sign off on?
-2. How do you tell whether that decision-making is any good, without waiting on a signal as
-   noisy as short-run P&L?
+Before that: a year of clinical ML research at Temple, and a summer on an equity
+research desk.
 
-The background behind it is an unusual mix that turns out to work well together: an M.S. in
-Computer Science, a year of NIH-funded clinical machine learning research, and real time in
-markets — an equity research desk, plus my own options and equities trading.
+---
+
+<div align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/timeline-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/timeline-light.svg">
+  <img alt="Career timeline as a level-select map. Stage 1, 2023: Technical Analyst at Arihant Investments — screened equities for breakout setups, wrote daily trade reports. Stage 2, 2024–25: ML Research Assistant at Temple University — clinical AI on linked EHR data, NIH-funded (U01, NIDCR). Stage 3, 2025: Research Lead at Civic Interactions Lab — led an undergrad capstone team as their lead and stakeholder. Stage 4, 2025 onward, current: Independent AI Engineer, self-directed — agentic systems, RAG, and the evals that keep them honest. Education: M.S. Computer Science, Temple University 2024–25; B.C.A., Charotar University 2020–23." src="assets/timeline-light.svg" width="100%">
+</picture>
+</div>
 
 ---
 
@@ -50,23 +57,17 @@ markets — an equity research desk, plus my own options and equities trading.
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/pipeline-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="assets/pipeline-light.svg">
-  <img alt="Architecture diagram: a deterministic scanner screens the S&P 500, routes candidates to three parallel LLM agents (technical, news, events), a trader agent synthesizes them, and a pure-code risk gate either produces a proposal for human approval and the trade journal, or returns NO-TRADE." src="assets/pipeline-light.svg" width="100%">
+  <img alt="Architecture diagram of the trading desk: a deterministic scanner screens the S&P 500, routes candidates to three parallel LLM agents (technical, news, events), a trader agent synthesizes them, and a pure-code risk gate either produces a proposal for human approval and the trade journal, or returns NO-TRADE." src="assets/pipeline-light.svg" width="100%">
 </picture>
 </div>
 
-**What that diagram is actually arguing:**
+The trading desk in diagram form. Three things I'd keep if I started it over:
 
-- **LLMs propose, code disposes.** Position sizing, reward-to-risk floors, stop placement and
-  trade caps live in a deterministic gate the model has no way to argue its way past.
-- **Keep deterministic work deterministic.** Screening 500 tickers for liquidity and setup
-  quality is a rules problem — cheaper, faster and auditable. Agents are reserved for the
-  places where judgment genuinely helps.
-- **Evaluate the process, not the outcome.** One trade tells you almost nothing. Groundedness,
-  policy compliance and safety invariants can be measured on every single run.
-- **Show the reasoning before anything happens.** A LangGraph interrupt puts the full agent
-  rationale in front of a human ahead of execution.
-- **`NO-TRADE` is a first-class answer.** A system that can't decline isn't managing risk,
-  it's generating volume.
+- **The model doesn't get the last word.** Sizing, stops, R:R floors — plain code
+  the LLM can't talk its way around.
+- **Don't make an LLM do a for-loop.** Screening 500 tickers is a rules problem.
+  Agents only where judgment actually helps.
+- **`NO-TRADE` is a real answer.** Something that can't say no isn't managing risk.
 
 ---
 
@@ -80,69 +81,30 @@ markets — an equity research desk, plus my own options and equities trading.
 
 ---
 
-<div align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/metrics-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="assets/metrics-light.svg">
-  <img alt="Measured results. 69% tool-grounded accuracy versus 29% ungrounded, a 40-point gap. 48% tool-bypass rate exposed by controlled ablation. 1,000 SimpleQA Verified questions in a deterministic LLM-as-judge harness. 0.82 F1 on periodontitis detection under stratified 5-fold cross-validation. 80% feature dimensionality reduction with minimal information loss. 4,000+ linked patient records across ICD-10, CDT, medication and procedure codes." src="assets/metrics-light.svg" width="100%">
-</picture>
-</div>
-
-Every number there comes out of a seeded, reproducible run or a peer-reviewed clinical
-pipeline. The two I find most interesting are the failure modes: a **48% tool-bypass rate**
-and a **40-point accuracy gap** between ungrounded and tool-grounded answers only showed up
-because the ablations were controlled — an unmeasured agent would have looked fine.
-
----
-
-### `$ history`
-
-<table>
-<tr>
-  <td><code>2025&nbsp;→</code></td>
-  <td><b>Independent AI engineer</b> — agentic systems &amp; LLM evaluation</td>
-</tr>
-<tr>
-  <td><code>2025</code></td>
-  <td><b>Research lead</b> — undergraduate capstone team, Civic Interactions Lab.
-      Set direction and acted as stakeholder for the students who built it.</td>
-</tr>
-<tr>
-  <td><code>2024&nbsp;–&nbsp;25</code></td>
-  <td><b>ML research assistant, clinical AI</b> — Temple University, Center for
-      Dental Informatics &amp; AI · NIH-funded (U01, NIDCR)</td>
-</tr>
-<tr>
-  <td><code>2023</code></td>
-  <td><b>Technical analyst intern, equities</b> — Arihant Investments, Vadodara</td>
-</tr>
-</table>
-
-<sub>**M.S. Computer Science**, Temple University (2024 – 25) · **B.C.A.**, Charotar University of Science and Technology (2020 – 23)</sub>
-
----
-
 ### `$ ls publications/`
 
-- **AI-Driven Application for Feature Reduction in Linked EHR** — abstract, 2025 AADOCR/CADR
-  Annual Meeting, New York, NY. <sub>*Co-author*</sub>
-- **Developing Deep Learning Models to Improve Dental Radiograph Clarity and Quality** —
-  abstract, 2025 IADR/PER General Session, Barcelona, Spain. <sub>*Co-author*</sub>
-- **Periodontitis prediction model with linked electronic health records** — *JDR Clinical &
-  Translational Research*, 2025. <sub>*Programming contributor*</sub>
-- **Orthodontic NLP model for automated clinical note information extraction** — *Orthodontics
-  & Craniofacial Research*, 2024. [`10.1111/ocr.12944`](https://doi.org/10.1111/ocr.12944)
+From the Temple research year — I wrote code on these, not prose.
+
+- **AI-Driven Application for Feature Reduction in Linked EHR** — abstract, 2025
+  AADOCR/CADR Annual Meeting, New York, NY. <sub>*Co-author*</sub>
+- **Developing Deep Learning Models to Improve Dental Radiograph Clarity and
+  Quality** — abstract, 2025 IADR/PER General Session, Barcelona, Spain.
+  <sub>*Co-author*</sub>
+- **Periodontitis prediction model with linked electronic health records** —
+  *JDR Clinical & Translational Research*, 2025. <sub>*Programming contributor*</sub>
+- **Orthodontic NLP model for automated clinical note information extraction** —
+  *Orthodontics & Craniofacial Research*, 2024.
+  [`10.1111/ocr.12944`](https://doi.org/10.1111/ocr.12944)
   <sub>*Programming contributor*</sub>
 
 ---
 
 <div align="center">
 
-**Currently open to AI engineering roles.**
-Agentic systems, LLM evaluation, applied ML — especially anywhere near markets.
+**Open to AI engineering roles** — agentic systems, LLM evaluation, applied ML.
+Happy to talk about any of it.
 
-<sub>Every graphic on this page is a hand-authored SVG generated by
-<a href="assets/src/build.py"><code>assets/src/build.py</code></a> — no badge services, no
-external fonts, no runtime requests.</sub>
+<sub>Every graphic here is a hand-rolled SVG built by
+<a href="assets/src/build.py"><code>assets/src/build.py</code></a>. No badge services.</sub>
 
 </div>

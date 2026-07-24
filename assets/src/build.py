@@ -344,7 +344,7 @@ def build_hero(pal):
              f'font-weight="600" fill="{pal["dim"]}">{esc(rsep)}</text></g>')
 
     roles = ["Agentic LLM Systems", "Multi-Agent Orchestration",
-             "LLM Evaluation & Safety", "Applied ML for Markets"]
+             "RAG & Retrieval", "LLM Evaluation"]
     rx, slot = x0 + tw(anchor + rsep, rfs), 3.4
     cycle = len(roles) * slot
     for i, r in enumerate(roles):
@@ -366,9 +366,9 @@ def build_hero(pal):
 
     # -- blurb
     for i, ln in enumerate([
-        "I build multi-agent systems that reason about markets under hard,",
-        "code-enforced risk limits — and the evaluation harnesses that prove",
-        "whether the reasoning actually holds up.",
+        "I build agentic LLM systems — multi-agent setups, RAG, and the",
+        "evals that catch them being confidently wrong. Right now I'm",
+        "pointing that at markets, because it's a domain that argues back.",
     ]):
         b.append(f'{gin(1.35 + i * 0.09, 6)}<text class="m" x="{x0}" y="{294 + i * 24}" '
                  f'font-size="13.5" fill="{pal["muted"]}">{esc(ln)}</text></g>')
@@ -379,7 +379,7 @@ def build_hero(pal):
     b.append(f'<rect x="{px0}" y="{py0}" width="{pw}" height="{ph}" rx="14" '
              f'fill="{pal["surface"]}" stroke="{pal["border"]}" stroke-width="1.5"/>')
     b.append(f'<text class="m" x="{px0 + 20}" y="{py0 + 28}" font-size="11" '
-             f'letter-spacing="1.8" fill="{pal["dim"]}">SCANNER · MARKET VIEW</text>')
+             f'letter-spacing="1.8" fill="{pal["dim"]}">CURRENT BUILD</text>')
     b.append(f'<circle cx="{px0 + pw - 62}" cy="{py0 + 24}" r="3.5" fill="{pal["accent"]}">'
              f'{pulse_op()}</circle>')
     b.append(f'<text class="m" x="{px0 + pw - 52}" y="{py0 + 28}" font-size="11" '
@@ -449,7 +449,7 @@ def build_hero(pal):
                  f'repeatCount="indefinite"/></circle>')
 
     b.append(f'<text class="m" x="{px0 + 26}" y="{py0 + 280}" font-size="11" '
-             f'fill="{pal["dim"]}">deterministic screen → agent review → risk gate</text>')
+             f'fill="{pal["dim"]}">swing scanner → agent review → risk gate</text>')
     b.append('</g>')
 
     # ---- status bar
@@ -613,7 +613,7 @@ def build_pipeline(pal):
     W, H = 1200, 440
     NW, NH, MID = 168, 62, 240
     b = [frame(W, H, pal),
-         header(pal, W, "render architecture --graph", "How I build agentic systems")]
+         header(pal, W, "render architecture --graph", "The trading desk, roughly")]
 
     def node(x, y, title, sub, col, dashed=False, w=NW, h=NH, d=0.0):
         dash = ' stroke-dasharray="5 4"' if dashed else ""
@@ -689,48 +689,185 @@ def build_pipeline(pal):
     return svg(W, H, "".join(b), pal)
 
 
-# ---------------------------------------------------------------- metrics
+# --------------------------------------------------------------- timeline
+# The career as a level-select map: a road winding through four stage
+# badges, cleared stages behind, the current one lit up ahead.
 
-METRICS = [
-    ("69%", "tool-grounded accuracy", "vs 29% ungrounded — a 40-point gap", 0.69, "accent"),
-    ("48%", "tool-bypass rate exposed", "controlled ablation, seeded runs", 0.48, "accent3"),
-    ("1,000", "SimpleQA Verified questions", "deterministic LLM-as-judge harness", 1.0, "accent2"),
-    ("0.82", "F1 · periodontitis detection", "stratified 5-fold cross-validation", 0.82, "accent"),
-    ("80%", "feature dimensionality cut", "minimal information loss", 0.80, "accent3"),
-    ("4,000+", "linked patient records", "ICD-10 · CDT · meds · procedures", 1.0, "accent2"),
+STAGES = [
+    ("2023", "Technical Analyst", "Arihant Investments",
+     ["screened equities for breakout", "setups, wrote daily trade reports"],
+     "accent2", "candles", 196),
+    ("2024 – 25", "ML Research Assistant", "Temple University",
+     ["clinical AI on linked EHR data,", "NIH-funded (U01, NIDCR)"],
+     "accent2", "pulse", 150),
+    ("2025", "Research Lead", "Civic Interactions Lab",
+     ["led an undergrad capstone team", "as their lead and stakeholder"],
+     "accent3", "agents", 192),
+    ("2025 →", "Independent AI Engineer", "self-directed",
+     ["agentic systems, RAG, and the", "evals that keep them honest"],
+     "accent", "spark", 146),
 ]
 
 
-def build_metrics(pal):
-    W, PAD, GAP, CH = 1200, 46, 16, 116
-    CW_ = (W - PAD * 2 - GAP * 2) / 3
-    H = int(116 + CH * 2 + GAP + 22)
+def _catmull(pts):
+    """Smooth cubic path through pts. Returns (path data, bezier segments)."""
+    segs, d = [], f"M {pts[0][0]:.1f} {pts[0][1]:.1f}"
+    n = len(pts)
+    for i in range(n - 1):
+        p0 = pts[i - 1] if i else pts[0]
+        p1, p2 = pts[i], pts[i + 1]
+        p3 = pts[i + 2] if i + 2 < n else pts[-1]
+        c1 = (p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6)
+        c2 = (p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6)
+        segs.append((p1, c1, c2, p2))
+        d += (f" C {c1[0]:.1f} {c1[1]:.1f}, {c2[0]:.1f} {c2[1]:.1f}, "
+              f"{p2[0]:.1f} {p2[1]:.1f}")
+    return d, segs
 
-    b = [frame(W, H, pal), header(pal, W, "tail -f results.log", "Measured, not claimed")]
 
-    for i, (val, label, sub, frac, ckey) in enumerate(METRICS):
-        r, c = divmod(i, 3)
-        x, y = PAD + c * (CW_ + GAP), 116 + r * (CH + GAP)
-        col, d = pal[ckey], 0.2 + i * 0.1
-        bw = CW_ - 44
-        a, an = grow("width", round(bw * frac, 1), 1.1, d + 0.25)
+def _seg_len(seg, n=36):
+    (p0, c1, c2, p1), tot, prev = seg, 0.0, None
+    for i in range(n + 1):
+        t = i / n
+        m = 1 - t
+        x = m ** 3 * p0[0] + 3 * m * m * t * c1[0] + 3 * m * t * t * c2[0] + t ** 3 * p1[0]
+        y = m ** 3 * p0[1] + 3 * m * m * t * c1[1] + 3 * m * t * t * c2[1] + t ** 3 * p1[1]
+        if prev:
+            tot += math.dist(prev, (x, y))
+        prev = (x, y)
+    return tot
 
-        b.append(gin(d, 9))
-        b.append(f'<rect x="{x:.1f}" y="{y}" width="{CW_:.1f}" height="{CH}" rx="12" '
-                 f'fill="{pal["surface"]}" stroke="{pal["border"]}" stroke-width="1"/>')
-        b.append(f'<rect x="{x:.1f}" y="{y}" width="{CW_:.1f}" height="2.5" rx="1.25" '
-                 f'fill="{col}" opacity="0.85"/>')
-        b.append(f'<text class="s" x="{x + 22:.1f}" y="{y + 55}" font-size="40" '
-                 f'font-weight="800" letter-spacing="-0.5" fill="{col}">{esc(val)}</text>')
-        b.append(f'<text class="m" x="{x + 22:.1f}" y="{y + 78}" font-size="13" '
-                 f'fill="{pal["text"]}">{esc(label)}</text>')
-        b.append(f'<text class="m" x="{x + 22:.1f}" y="{y + 96}" font-size="11" '
-                 f'fill="{pal["dim"]}">{esc(sub)}</text>')
-        b.append(f'<rect x="{x + 22:.1f}" y="{y + CH - 12}" width="{bw:.1f}" height="3" '
-                 f'rx="1.5" fill="{pal["border"]}"/>')
-        b.append(f'<rect x="{x + 22:.1f}" y="{y + CH - 12}" {a} height="3" rx="1.5" '
-                 f'fill="{col}">{an}</rect>')
+
+def _hexagon(cx, cy, r):
+    p = [(cx + r * math.cos(math.radians(a)), cy + r * math.sin(math.radians(a)))
+         for a in range(30, 390, 60)]
+    return "M " + " L ".join(f"{x:.2f} {y:.2f}" for x, y in p) + " Z"
+
+
+def build_timeline(pal):
+    W, PAD, H = 1200, 46, 462
+    colw = (W - PAD * 2) / len(STAGES)
+    CARD_Y, CARD_H = 252, 120
+    R = 23
+
+    b = [frame(W, H, pal),
+         header(pal, W, "load savefile.json", "The run so far")]
+
+    xs = [PAD + colw * i + colw / 2 for i in range(len(STAGES))]
+    ys = [s[6] for s in STAGES]
+    road_pts = ([(PAD + 18, ys[0] + 20)] + list(zip(xs, ys))
+                + [(W - PAD - 18, ys[-1] - 20)])
+    d, segs = _catmull(road_pts)
+    lens = [_seg_len(s) for s in segs]
+    L = sum(lens)
+    # the player has cleared everything up to the last badge
+    reached = sum(lens[:len(STAGES)]) / L
+
+    # -- the road: thick base that draws itself, then marching centre dashes
+    rd = "" if STATIC else f' stroke-dasharray="{L:.0f}" stroke-dashoffset="0"'
+    ra = "" if STATIC else (
+        f'<animate attributeName="stroke-dashoffset" values="{L:.0f};{L:.0f};0" '
+        f'keyTimes="0;0.12;1" dur="2.20s" begin="0s" fill="freeze" '
+        f'calcMode="spline" keySplines="0 0 1 1;0.35 0 0.15 1"/>')
+    b.append(f'<path d="{d}" fill="none" stroke="{pal["border"]}" stroke-width="11" '
+             f'stroke-linecap="round" stroke-linejoin="round"{rd}>{ra}</path>')
+    march = "" if STATIC else (
+        '<animate attributeName="stroke-dashoffset" values="0;-18" dur="1.1s" '
+        'repeatCount="indefinite"/>')
+    b.append(f'<path d="{d}" fill="none" stroke="{pal["accent"]}" stroke-width="2" '
+             f'stroke-linecap="round" opacity="0.45" stroke-dasharray="4 14" '
+             f'stroke-dashoffset="0">{march}</path>')
+
+    # -- travelling spark: purely decorative, so it stays hidden without SMIL
+    if not STATIC:
+        b.append(f'<circle r="5" fill="{pal["accent"]}" opacity="0">'
+                 f'<animateMotion dur="3.4s" begin="1.6s" repeatCount="indefinite" '
+                 f'path="{d}" keyPoints="0;{reached:.4f}" keyTimes="0;1" '
+                 f'calcMode="spline" keySplines="0.4 0 0.2 1"/>'
+                 f'<animate attributeName="opacity" values="0;0.9;0.9;0" dur="3.4s" '
+                 f'begin="1.6s" repeatCount="indefinite"/></circle>')
+
+    # -- stage badges
+    for i, (year, role, org, det, ckey, gl, ny) in enumerate(STAGES):
+        cx, col = xs[i], pal[ckey]
+        current = i == len(STAGES) - 1
+        t0 = 0.9 + i * 0.22
+
+        b.append(f'<line x1="{cx:.1f}" y1="{ny + R}" x2="{cx:.1f}" y2="{CARD_Y}" '
+                 f'stroke="{col}" stroke-width="1.2" stroke-dasharray="3 4" opacity="0.45"/>')
+
+        if current and not STATIC:
+            for j, dl in enumerate((0.0, 1.0)):
+                b.append(f'<circle cx="{cx:.1f}" cy="{ny}" r="{R}" fill="none" '
+                         f'stroke="{col}" stroke-width="1.6" opacity="0">'
+                         f'<animate attributeName="r" values="{R};{R + 20}" dur="2s" '
+                         f'begin="{2.2 + dl}s" repeatCount="indefinite"/>'
+                         f'<animate attributeName="opacity" values="0.75;0" dur="2s" '
+                         f'begin="{2.2 + dl}s" repeatCount="indefinite"/></circle>')
+
+        b.append(gin(t0, 0, 0.5))
+        sc = "" if STATIC else (
+            f'<animateTransform attributeName="transform" type="scale" '
+            f'values="0.4;0.4;1" keyTimes="0;{t0 / (t0 + 0.5):.4f};1" '
+            f'dur="{t0 + 0.5:.2f}s" begin="0s" fill="freeze" calcMode="spline" '
+            f'keySplines="0 0 1 1;0.34 1.4 0.5 1"/>')
+        b.append(f'<g transform="translate({cx:.1f},{ny})"><g transform="scale(1)">{sc}'
+                 f'<path d="{_hexagon(0, 0, R)}" '
+                 f'fill="{col if current else pal["surface"]}" stroke="{col}" '
+                 f'stroke-width="2"/>'
+                 f'<text class="m" x="0" y="4.5" font-size="12.5" font-weight="700" '
+                 f'text-anchor="middle" fill="{pal["bg"] if current else col}">'
+                 f'{i + 1:02d}</text></g></g>')
+
+        if current:
+            b.append(f'<text class="m" x="{cx:.1f}" y="{ny - R - 13}" font-size="10" '
+                     f'font-weight="700" letter-spacing="2" text-anchor="middle" '
+                     f'fill="{col}">YOU ARE HERE</text>')
+        else:
+            b.append(f'<path d="M {cx - 5.5:.1f} {ny - R - 17} l 4 4.5 l 7.5 -8" '
+                     f'fill="none" stroke="{col}" stroke-width="2" opacity="0.75" '
+                     f'stroke-linecap="round" stroke-linejoin="round"/>')
         b.append('</g>')
+
+        # -- stage card
+        cardx, cardw = PAD + colw * i + 9, colw - 18
+        b.append(gin(1.25 + i * 0.14, 10, 0.6))
+        b.append(f'<rect x="{cardx:.1f}" y="{CARD_Y}" width="{cardw:.1f}" '
+                 f'height="{CARD_H}" rx="12" fill="{pal["surface"]}" stroke="{col}" '
+                 f'stroke-width="{1.6 if current else 1}" opacity="{1 if current else 0.92}"/>')
+        b.append(glyph(gl, cardx + cardw - 34, CARD_Y + 16, 20, col))
+        yw = tw(year, 10.5) + 16
+        b.append(f'<rect x="{cardx + 16:.1f}" y="{CARD_Y + 15}" width="{yw:.1f}" '
+                 f'height="20" rx="6" fill="{col}" opacity="0.16"/>')
+        b.append(f'<text class="m" x="{cardx + 24:.1f}" y="{CARD_Y + 29}" font-size="10.5" '
+                 f'font-weight="700" letter-spacing="0.4" fill="{col}">{esc(year)}</text>')
+        b.append(f'<text class="m" x="{cardx + 16:.1f}" y="{CARD_Y + 58}" font-size="13" '
+                 f'font-weight="700" fill="{pal["text"]}">{esc(role)}</text>')
+        b.append(f'<text class="m" x="{cardx + 16:.1f}" y="{CARD_Y + 77}" font-size="11" '
+                 f'fill="{col}">{esc(org)}</text>')
+        for k, ln in enumerate(det):
+            b.append(f'<text class="m" x="{cardx + 16:.1f}" y="{CARD_Y + 97 + k * 15}" '
+                     f'font-size="10.5" fill="{pal["dim"]}">{esc(ln)}</text>')
+        b.append('</g>')
+
+    # -- unlocked strip
+    uy = CARD_Y + CARD_H + 16
+    b.append(f'<line x1="{PAD}" y1="{uy}" x2="{W - PAD}" y2="{uy}" '
+             f'stroke="{pal["border"]}" stroke-width="1" opacity="0.7"/>')
+    b.append(fade(2.0))
+    b.append(f'<text class="m" x="{PAD}" y="{uy + 34}" font-size="10.5" '
+             f'font-weight="700" letter-spacing="2" fill="{pal["dim"]}">UNLOCKED</text>')
+    bx = PAD + 104
+    for label in ["M.S. Computer Science · Temple University · 2024–25",
+                  "B.C.A. · Charotar University · 2020–23"]:
+        bw = tw(label, 11.5) + 44
+        b.append(f'<rect x="{bx:.1f}" y="{uy + 16}" width="{bw:.1f}" height="26" rx="13" '
+                 f'fill="none" stroke="{pal["border"]}" stroke-width="1"/>')
+        b.append(glyph("spark", bx + 13, uy + 23, 12, pal["accent3"]))
+        b.append(f'<text class="m" x="{bx + 33:.1f}" y="{uy + 33}" font-size="11.5" '
+                 f'fill="{pal["muted"]}">{esc(label)}</text>')
+        bx += bw + 12
+    b.append('</g>')
 
     return svg(W, H, "".join(b), pal)
 
@@ -770,7 +907,7 @@ def main():
     dest = os.path.join(OUT, "preview") if STATIC else OUT
     os.makedirs(dest, exist_ok=True)
     for name, fn in (("hero", build_hero), ("stack", build_stack),
-                     ("pipeline", build_pipeline), ("metrics", build_metrics)):
+                     ("pipeline", build_pipeline), ("timeline", build_timeline)):
         for pal in (DARK, LIGHT):
             path = os.path.join(dest, f"{name}-{pal['name']}.svg")
             with open(path, "w", encoding="utf-8") as f:
