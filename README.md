@@ -3,7 +3,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg">
-  <img alt="Manan Patel — AI Engineer. Agentic LLM systems, multi-agent orchestration, RAG and retrieval, LLM evaluation. M.S. Computer Science, Temple University. Philadelphia, PA." src="assets/hero-light.svg" width="100%">
+  <img alt="Manan Patel — AI Engineer working on agentic LLM systems, multi-agent orchestration, retrieval and RAG, and LLM evaluation. Builds agentic LLM systems and the evals that catch them being confidently wrong, currently pointed at markets. M.S. Computer Science, Temple University. Philadelphia, PA. 4 publications and abstracts. Open to AI engineering roles." src="assets/hero-light.svg" width="100%">
 </picture>
 
 <a href="mailto:manan305@icloud.com">
@@ -33,10 +33,9 @@
 
 AI engineer in Philadelphia, mostly building agentic LLM systems.
 
-Two of them so far: a multi-agent trading desk that's still very much a work in
-progress, and a small eval harness that checks whether a RAG agent is actually
-using its tools or just winging it. The eval one taught me more — turns out an
-agent can skip its tools half the time and still look fine until you measure it.
+Two of them so far, both below. The eval harness taught me more than the trading
+desk did — it turns out an agent can skip its tools half the time and still look
+fine, right up until you measure it.
 
 Before that: a year of clinical ML research at Temple, and a summer on an equity
 research desk.
@@ -45,9 +44,9 @@ research desk.
 
 <div align="center">
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/timeline-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="assets/timeline-light.svg">
-  <img alt="Career timeline as a level-select map. Stage 1, 2023: Technical Analyst at Arihant Investments — screened equities for breakout setups, wrote daily trade reports. Stage 2, 2024–25: ML Research Assistant at Temple University — clinical AI on linked EHR data, NIH-funded (U01, NIDCR). Stage 3, 2025: Research Lead at Civic Interactions Lab — led an undergrad capstone team as their lead and stakeholder. Stage 4, 2025 onward, current: Independent AI Engineer, self-directed — agentic systems, RAG, and the evals that keep them honest. Education: M.S. Computer Science, Temple University 2024–25; B.C.A., Charotar University 2020–23." src="assets/timeline-light.svg" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/projects-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/projects-light.svg">
+  <img alt="Two projects. Multi-Agent Trading Desk, in progress: a deterministic scanner feeds three specialist agents, a trader synthesises them, and a pure-code risk gate gets the last word. Built with LangGraph, human-in-the-loop, a risk gate and a trade journal. Agentic RAG Eval Harness, shipped: grades whether a RAG agent actually called its tools or just wrote something plausible; it skipped them more than expected. Built with LLM-as-judge, trace assertions, seeded runs and Qdrant. Both charts are schematics of the systems, not measured results." src="assets/projects-light.svg" width="100%">
 </picture>
 </div>
 
@@ -68,6 +67,16 @@ The trading desk in diagram form. Three things I'd keep if I started it over:
 - **Don't make an LLM do a for-loop.** Screening 500 tickers is a rules problem.
   Agents only where judgment actually helps.
 - **`NO-TRADE` is a real answer.** Something that can't say no isn't managing risk.
+
+---
+
+<div align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/timeline-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/timeline-light.svg">
+  <img alt="Career timeline plotted as a course between four waypoints. Stage 1, 2023: Technical Analyst at Arihant Investments — screened equities for breakout setups, wrote daily trade reports. Stage 2, 2024–25: ML Research Assistant at Temple University — clinical AI on linked EHR data, NIH-funded (U01, NIDCR). Stage 3, 2025: Research Lead at Civic Interactions Lab — led an undergrad capstone team as their lead and stakeholder. Stage 4, 2025 onward, the current leg: Independent AI Engineer, self-directed — agentic systems, retrieval, and the evals that keep them honest. Education: M.S. Computer Science, Temple University 2024–25; B.C.A., Charotar University 2020–23." src="assets/timeline-light.svg" width="100%">
+</picture>
+</div>
 
 ---
 
@@ -105,6 +114,8 @@ From the Temple research year — I wrote code on these, not prose.
 Happy to talk about any of it.
 
 <sub>Every graphic here is a hand-rolled SVG built by
-<a href="assets/src/build.py"><code>assets/src/build.py</code></a>. No badge services.</sub>
+<a href="assets/src/build.py"><code>assets/src/build.py</code></a> — no badge
+services, no external fonts, no runtime requests, no JavaScript. Motion is SMIL
+and CSS keyframes, which is all that runs inside GitHub's image sandbox.</sub>
 
 </div>

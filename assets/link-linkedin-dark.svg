@@ -1,18 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 44" width="130" height="44" role="img"><defs>
-<style>
-.m{font-family:ui-monospace,'SFMono-Regular','SF Mono',Menlo,Consolas,'DejaVu Sans Mono',monospace}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135 46" width="135" height="46" role="img"><defs><style>.m{font-family:ui-monospace,'SFMono-Regular','SF Mono',Menlo,Consolas,'DejaVu Sans Mono',monospace}
 .s{font-family:'Inter','Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif}
-</style>
-<pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
-  <circle cx="1.5" cy="1.5" r="1.1" fill="#161F2B"/>
-</pattern>
-<linearGradient id="accentbar" x1="0" y1="0" x2="1" y2="0">
-  <stop offset="0" stop-color="#4EE1A0"/>
-  <stop offset="1" stop-color="#58A6FF"/>
-</linearGradient>
-<linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
-  <stop offset="0" stop-color="#1E2A38" stop-opacity="1"/>
-  <stop offset="1" stop-color="#1E2A38" stop-opacity="0"/>
-</linearGradient>
-
-</defs><rect x="1" y="1" width="128" height="42" rx="11" fill="#111823" stroke="#1E2A38" stroke-width="1.5"/><g transform="translate(18.00,14.00) scale(0.6667)"><circle cx="4.4" cy="4.6" r="2.7" fill="#58A6FF"/><rect x="2.1" y="9.1" width="4.6" height="12.5" rx="0.7" fill="#58A6FF"/><rect x="9.4" y="9.1" width="4.4" height="12.5" rx="0.7" fill="#58A6FF"/><path d="M13.8 15.3a2.9 2.9 0 015.8 0v6.3h4.3v-7.1a6.2 6.2 0 00-10.1-4.8z" fill="#58A6FF"/></g><text class="m" x="44" y="26.5" font-size="13" font-weight="600" letter-spacing="0.8" fill="#E6EDF3">LINKEDIN</text></svg>
+@keyframes tw{0%,100%{opacity:1}50%{opacity:.14}}
+@keyframes br{0%,100%{opacity:.55}50%{opacity:1}}
+.tw{animation:tw 4s ease-in-out infinite}
+.br{animation:br 7s ease-in-out infinite}</style><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A78BFA" stop-opacity="0.75"/><stop offset="1" stop-color="#A78BFA" stop-opacity="0.22"/></linearGradient><linearGradient id="cf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A78BFA" stop-opacity="0.10"/><stop offset="1" stop-color="#A78BFA" stop-opacity="0.02"/></linearGradient></defs><rect x="1.25" y="1.25" width="132.5" height="43.5" rx="12" fill="#0E1226"/><rect x="1.25" y="1.25" width="132.5" height="43.5" rx="12" fill="url(#cf)"/><rect x="1.25" y="1.25" width="132.5" height="43.5" rx="12" fill="none" stroke="url(#cg)" stroke-width="1.5"/><g transform="translate(20.00,15.00) scale(0.6667)"><circle cx="4.4" cy="4.6" r="2.7" fill="#A78BFA"/><rect x="2.1" y="9.1" width="4.6" height="12.5" rx="0.7" fill="#A78BFA"/><rect x="9.4" y="9.1" width="4.4" height="12.5" rx="0.7" fill="#A78BFA"/><path d="M13.8 15.3a2.9 2.9 0 015.8 0v6.3h4.3v-7.1a6.2 6.2 0 00-10.1-4.8z" fill="#A78BFA"/></g><text class="m" x="47" y="27.5" font-size="13" font-weight="700" letter-spacing="0.9" fill="#E9EEFF">LINKEDIN</text><rect x="1.25" y="42.5" height="2" rx="1" fill="#A78BFA" width="45.0" opacity="0.9"><animate attributeName="x" values="1.25;88.8;1.25" dur="4.5s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1;0.45 0 0.55 1"/></rect></svg>
