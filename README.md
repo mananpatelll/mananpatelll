@@ -33,9 +33,9 @@
 
 AI engineer in Philadelphia, mostly building agentic LLM systems.
 
-Two of them so far, both below. The eval harness taught me more than the trading
-desk did — it turns out an agent can skip its tools half the time and still look
-fine, right up until you measure it.
+Day to day that means LangGraph and multi-agent orchestration, retrieval and RAG,
+and the evals that keep both honest — with Python, PyTorch and vector databases
+underneath. Full stack further down.
 
 Before that: a year of clinical ML research at Temple, and a summer on an equity
 research desk.
@@ -46,7 +46,7 @@ research desk.
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/projects-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="assets/projects-light.svg">
-  <img alt="Two projects. Multi-Agent Trading Desk, in progress: a deterministic scanner feeds three specialist agents, a trader synthesises them, and a pure-code risk gate gets the last word. Built with LangGraph, human-in-the-loop, a risk gate and a trade journal. Agentic RAG Eval Harness, shipped: grades whether a RAG agent actually called its tools or just wrote something plausible; it skipped them more than expected. Built with LLM-as-judge, trace assertions, seeded runs and Qdrant. Both charts are schematics of the systems, not measured results." src="assets/projects-light.svg" width="100%">
+  <img alt="Current project: Multi-Agent Trading Desk, in progress. A deterministic scanner screens the S&P 500, three specialist agents review what it finds, and a pure-code risk gate gets the last word — including the option to say no. Built with LangGraph, human-in-the-loop review, a risk gate and a trade journal. The chart is a schematic of the system, not a measured result." src="assets/projects-light.svg" width="100%">
 </picture>
 </div>
 
