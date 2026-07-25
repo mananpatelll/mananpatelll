@@ -896,116 +896,76 @@ def _candles(x, y, w, h, pal, seed=7, n=14, delay=0.6):
     return "".join(out)
 
 
-TRACE = [("retrieve", 0.00, 0.30, "a2"), ("tool:search", 0.22, 0.34, "a1"),
-         ("tool:price", 0.48, 0.20, "a1"), ("synthesize", 0.60, 0.26, "a3"),
-         ("judge", 0.82, 0.18, "a4")]
-
-
-def _trace(x, y, w, h, pal, delay=0.6):
-    """A schematic agent trace: which spans fire, and in what order. The point
-    of the harness is that the middle two rows are the ones that go missing."""
-    out = []
-    LW, rowh = 96, (h - 6) / len(TRACE)
-    bx, bw = x + LW, w - LW
-    for i in range(5):
-        gx = bx + bw * i / 4
-        out.append(f'<line x1="{gx:.1f}" y1="{y}" x2="{gx:.1f}" y2="{y + h - 8}" '
-                   f'stroke="{pal["border"]}" stroke-width="1" opacity="0.55"/>')
-    for i, (lab, off, ln, ck) in enumerate(TRACE):
-        ry = y + i * rowh + 4
-        sx, sw = bx + bw * off, max(16, bw * ln)
-        out.append(f'<text class="m" x="{x}" y="{ry + 11}" font-size="11" '
-                   f'fill="{pal["dim"]}">{esc(lab)}</text>')
-        a, an = grow("width", f"{sw:.1f}", 0.55, delay + i * 0.09)
-        out.append(f'<rect x="{sx:.1f}" y="{ry + 1}" {a} height="13" rx="6.5" '
-                   f'fill="{pal[ck]}" opacity="0.82">{an}</rect>')
-    if not STATIC:
-        out.append(f'<rect x="{bx}" y="{y - 2}" width="1.4" height="{h - 4}" '
-                   f'fill="{pal["a1"]}" opacity="0.55">'
-                   f'<animate attributeName="x" values="{bx};{bx + bw}" dur="3.4s" '
-                   f'begin="1.6s" repeatCount="indefinite"/>'
-                   f'<animate attributeName="opacity" values="0;0.6;0.6;0" dur="3.4s" '
-                   f'begin="1.6s" repeatCount="indefinite"/></rect>')
-    return "".join(out)
-
-
-PROJECTS = [
-    dict(key="a1", glyph="candles", status="IN PROGRESS", state="a4",
-         name="Multi-Agent Trading Desk",
-         line=["A deterministic scanner feeds three specialist agents, a trader",
-               "synthesises them, and a pure-code risk gate gets the last word."],
-         tags=["LangGraph", "human-in-the-loop", "risk gate", "trade journal"],
-         viz="candles"),
-    dict(key="a3", glyph="eval", status="SHIPPED", state="ok",
-         name="Agentic RAG Eval Harness",
-         line=["Grades whether a RAG agent actually called its tools or just",
-               "wrote something plausible. It skipped them more than I expected."],
-         tags=["LLM-as-judge", "trace assertions", "seeded runs", "Qdrant"],
-         viz="trace"),
-]
+PROJECT = dict(
+    key="a1", glyph="candles", status="IN PROGRESS", state="a4",
+    name="Multi-Agent Trading Desk",
+    line=["A deterministic scanner screens the S&P 500, three specialist agents",
+          "review what it finds, and a pure-code risk gate gets the last word —",
+          "including the option to say no."],
+    tags=["LangGraph", "human-in-the-loop", "risk gate", "trade journal"],
+)
 
 
 def build_projects(pal):
-    W, H, PAD = 1200, 466, 46
-    GAP, PW = 40, (1200 - PAD * 2 - 40) / 2
-    PY, PH = 126, 268
+    """One panel, full width. With a single system to show there's no grid to
+    balance, so the copy takes the left half and the chart takes the right."""
+    W, H, PAD = 1200, 440, 46
+    PY, PH, PW = 126, 242, 1200 - 46 * 2
+    LEFT, VIZ = PAD + 26, PAD + 566
 
+    p, col, st = PROJECT, pal[PROJECT["key"]], pal[PROJECT["state"]]
     b = [frame(W, H, pal),
          header(pal, W, "ls -l ~/projects", "What I'm actually building",
-                tag="2 SYSTEMS")]
+                tag="1 SYSTEM")]
 
-    for i, p in enumerate(PROJECTS):
-        x = PAD + i * (PW + GAP)
-        col, st = pal[p["key"]], pal[p["state"]]
-        b.append(gin(0.35 + i * 0.14, 12, 0.7))
-        b.append(f'<rect x="{x:.1f}" y="{PY}" width="{PW:.1f}" height="{PH}" rx="16" '
-                 f'fill="{pal["surface"]}" stroke="{pal["border"]}" stroke-width="1.5"/>')
-        # a rect, not a stroked horizontal path: an objectBoundingBox gradient
-        # on a zero-height bbox is degenerate and renders nothing at all
-        b.append(f'<rect x="{x + 16:.1f}" y="{PY - 1.25}" width="{PW - 32:.1f}" '
-                 f'height="2.5" rx="1.25" fill="url(#spectrum)"/>')
+    b.append(gin(0.35, 12, 0.7))
+    b.append(f'<rect x="{PAD}" y="{PY}" width="{PW}" height="{PH}" rx="16" '
+             f'fill="{pal["surface"]}" stroke="{pal["border"]}" stroke-width="1.5"/>')
+    # a rect, not a stroked horizontal path: an objectBoundingBox gradient
+    # on a zero-height bbox is degenerate and renders nothing at all
+    b.append(f'<rect x="{PAD + 16}" y="{PY - 1.25}" width="{PW - 32}" '
+             f'height="2.5" rx="1.25" fill="url(#spectrum)"/>')
 
-        b.append(glyph(p["glyph"], x + 24, PY + 26, 22, col))
-        b.append(f'<text class="s" x="{x + 56:.1f}" y="{PY + 44}" font-size="17" '
-                 f'font-weight="700" fill="{pal["text"]}">{esc(p["name"])}</text>')
+    b.append(glyph(p["glyph"], LEFT, PY + 30, 24, col))
+    b.append(f'<text class="s" x="{LEFT + 36}" y="{PY + 50}" font-size="20" '
+             f'font-weight="700" fill="{pal["text"]}">{esc(p["name"])}</text>')
 
-        sw = tw(p["status"], 10) + 30
-        b.append(f'<rect x="{x + PW - sw - 22:.1f}" y="{PY + 26}" width="{sw:.1f}" '
-                 f'height="22" rx="11" fill="{st}" fill-opacity="0.14" stroke="{st}" '
-                 f'stroke-opacity="0.45" stroke-width="1"/>')
-        b.append(f'<circle cx="{x + PW - sw - 10:.1f}" cy="{PY + 37}" r="3" fill="{st}">'
-                 f'{pulse_op(2.4, "0.3")}</circle>')
-        b.append(f'<text class="m" x="{x + PW - sw - 2:.1f}" y="{PY + 41}" font-size="10" '
-                 f'letter-spacing="1.2" fill="{st}">{esc(p["status"])}</text>')
+    # inline with the title, not flush right: flush right would sit on top of
+    # the chart panel, which starts at VIZ
+    sw, sx = tw(p["status"], 10) + 30, LEFT + 326
+    b.append(f'<rect x="{sx:.1f}" y="{PY + 32}" width="{sw:.1f}" '
+             f'height="22" rx="11" fill="{st}" fill-opacity="0.14" stroke="{st}" '
+             f'stroke-opacity="0.45" stroke-width="1"/>')
+    b.append(f'<circle cx="{sx + 12:.1f}" cy="{PY + 43}" r="3" fill="{st}">'
+             f'{pulse_op(2.4, "0.3")}</circle>')
+    b.append(f'<text class="m" x="{sx + 20:.1f}" y="{PY + 47}" font-size="10" '
+             f'letter-spacing="1.2" fill="{st}">{esc(p["status"])}</text>')
 
-        for k, ln in enumerate(p["line"]):
-            b.append(f'<text class="m" x="{x + 24:.1f}" y="{PY + 76 + k * 19}" '
-                     f'font-size="11.5" fill="{pal["muted"]}">{esc(ln)}</text>')
+    for k, ln in enumerate(p["line"]):
+        b.append(f'<text class="m" x="{LEFT}" y="{PY + 90 + k * 21}" '
+                 f'font-size="12" fill="{pal["muted"]}">{esc(ln)}</text>')
 
-        vy, vh = PY + 124, 84
-        b.append(f'<rect x="{x + 20:.1f}" y="{vy - 12}" width="{PW - 40:.1f}" '
-                 f'height="{vh + 20}" rx="10" fill="{pal["bg"]}" fill-opacity="0.6" '
-                 f'stroke="{pal["border"]}" stroke-width="1" opacity="0.8"/>')
-        if p["viz"] == "candles":
-            b.append(_candles(x + 34, vy - 4, PW - 68, vh, pal, delay=0.9 + i * 0.1))
-        else:
-            b.append(_trace(x + 34, vy - 4, PW - 68, vh, pal, delay=0.9 + i * 0.1))
+    tx = LEFT
+    for t in p["tags"]:
+        twd = tw(t, 10.5) + 20
+        b.append(f'<rect x="{tx:.1f}" y="{PY + 186}" width="{twd:.1f}" height="22" '
+                 f'rx="11" fill="none" stroke="{pal["border"]}" stroke-width="1"/>')
+        b.append(f'<text class="m" x="{tx + 10:.1f}" y="{PY + 201}" font-size="10.5" '
+                 f'fill="{pal["dim"]}">{esc(t)}</text>')
+        tx += twd + 7
 
-        tx = x + 24
-        for t in p["tags"]:
-            twd = tw(t, 10.5) + 20
-            b.append(f'<rect x="{tx:.1f}" y="{PY + 228}" width="{twd:.1f}" height="22" '
-                     f'rx="11" fill="none" stroke="{pal["border"]}" stroke-width="1"/>')
-            b.append(f'<text class="m" x="{tx + 10:.1f}" y="{PY + 243}" font-size="10.5" '
-                     f'fill="{pal["dim"]}">{esc(t)}</text>')
-            tx += twd + 7
-        b.append('</g>')
+    vw, vh = PW - 566 - 26, 168
+    b.append(f'<rect x="{VIZ}" y="{PY + 32}" width="{vw}" height="{vh}" rx="10" '
+             f'fill="{pal["bg"]}" fill-opacity="0.6" stroke="{pal["border"]}" '
+             f'stroke-width="1" opacity="0.8"/>')
+    b.append(_candles(VIZ + 20, PY + 46, vw - 40, vh - 34, pal, delay=0.9))
+    b.append('</g>')
 
     b.append(f'<line x1="{PAD}" y1="{PY + PH + 26}" x2="{W - PAD}" y2="{PY + PH + 26}" '
              f'stroke="{pal["border"]}" stroke-width="1" opacity="0.7"/>')
     b.append(f'{fade(1.6)}<text class="m" x="{PAD}" y="{PY + PH + 52}" font-size="11.5" '
-             f'fill="{pal["dim"]}">Both charts above are schematics of the systems, '
-             f'not measured results — the numbers that matter live in the repos.</text></g>')
+             f'fill="{pal["dim"]}">The chart is a schematic of the system, not a '
+             f'measured result — the numbers that matter live in the repo.</text></g>')
 
     return svg(W, H, "".join(b), pal, card_defs(pal, W, H))
 
