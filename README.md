@@ -40,6 +40,7 @@ underneath. Full stack further down.
 Before that: a year of clinical ML research at Temple, and a summer on an equity
 research desk.
 
+<br>
 <div align="center">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/projects-dark.svg">
@@ -48,6 +49,7 @@ research desk.
 </picture>
 </div>
 
+<br>
 <div align="center">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/pipeline-dark.svg">
@@ -56,6 +58,7 @@ research desk.
 </picture>
 </div>
 
+<br>
 The trading desk in diagram form. Three things I'd keep if I started it over:
 
 - **The model doesn't get the last word.** Sizing, stops, R:R floors — plain code
@@ -73,6 +76,8 @@ The trading desk in diagram form. Three things I'd keep if I started it over:
   <img alt="Career timeline plotted as a course between four waypoints. Stage 1, 2023: Technical Analyst at Arihant Investments — screened equities for breakout setups, wrote daily trade reports. Stage 2, 2024–25: ML Research Assistant at Temple University — clinical AI on linked EHR data, NIH-funded (U01, NIDCR). Stage 3, 2025: Research Lead at Civic Interactions Lab — led an undergrad capstone team as their lead and stakeholder. Stage 4, 2025 onward, the current leg: Independent AI Engineer, self-directed — agentic systems, retrieval, and the evals that keep them honest. Education: M.S. Computer Science, Temple University 2024–25; B.C.A., Charotar University 2020–23." src="assets/timeline-light.svg" width="100%">
 </picture>
 </div>
+
+<br>
 
 <div align="center">
 <picture>
