@@ -40,8 +40,6 @@ underneath. Full stack further down.
 Before that: a year of clinical ML research at Temple, and a summer on an equity
 research desk.
 
----
-
 <div align="center">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/projects-dark.svg">
@@ -49,8 +47,6 @@ research desk.
   <img alt="Current project: Multi-Agent Trading Desk, in progress. A deterministic scanner screens the S&P 500, three specialist agents review what it finds, and a pure-code risk gate gets the last word — including the option to say no. Built with LangGraph, human-in-the-loop review, a risk gate and a trade journal. The chart is a schematic of the system, not a measured result." src="assets/projects-light.svg" width="100%">
 </picture>
 </div>
-
----
 
 <div align="center">
 <picture>
@@ -78,8 +74,6 @@ The trading desk in diagram form. Three things I'd keep if I started it over:
 </picture>
 </div>
 
----
-
 <div align="center">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/stack-dark.svg">
@@ -87,8 +81,6 @@ The trading desk in diagram form. Three things I'd keep if I started it over:
   <img alt="Technical stack. LLM and agentic: LangChain, LangGraph, LangSmith, Anthropic, OpenAI, Pydantic, Ollama; multi-agent orchestration, corrective RAG, MCP servers, human-in-the-loop, LLM-as-judge, structured outputs, prompt engineering, local inference. Machine learning: PyTorch, Transformers, scikit-learn, XGBoost, NumPy, SciPy, MLflow; embeddings, fine-tuning, feature engineering, hyperparameter search, cross-validation, ablation studies. Data and infrastructure: Python, SQL, pandas, FastAPI, Docker, Kubernetes, AWS, CUDA, Qdrant, Git; vector databases, reproducible pipelines, seeded deterministic runs, cost and latency instrumentation. Markets: equities and options, technical analysis, position sizing, reward-to-risk floors, stop placement, trade journaling. Clinical AI: clinical NLP, ICD-10 and CDT coding, linked EHR-EDR records, feature reduction, clinician-in-the-loop validation." src="assets/stack-light.svg" width="100%">
 </picture>
 </div>
-
----
 
 ### `$ ls publications/`
 
